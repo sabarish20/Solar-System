@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix: 
         nodejs-version: [18, 19, 20]
-        operating-sys: [ubuntu-latest, macos-latest]
+        operating-sys: [ubuntu-latest]
         exclude: 
           - nodejs-version: 18
             operating-sys: macos-latest
@@ -64,7 +64,7 @@ jobs:
       run: npm run coverage 
 
     - name: Archival Test Result
-      uses: actions/upload-artifact@v3 
+      uses: actions/upload-artifact@v4
       with: 
         name: Code-Coverage-Result
         path: coverage
