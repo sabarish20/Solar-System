@@ -8,7 +8,7 @@ on:
       - 'feature/*'
 
 jobs:
-  unit testing:
+  unit-testing:
     name: Unit Testing for Node JS 
     runs-on: ubuntu-latest
     steps:
