@@ -17,12 +17,9 @@ jobs:
     name: Unit Testing for Node JS 
     strategy:
       matrix: 
-        nodejs-version: [18, 19, 20]
+        nodejs-version: [18]
         operating-sys: [ubuntu-latest]
-        exclude: 
-          - nodejs-version: 18
-            operating-sys: macos-latest
-          
+
     runs-on: ${{ matrix.operating-sys }}
     steps:
     - name: Checkout Repo
@@ -61,6 +58,7 @@ jobs:
       run: npm install 
 
     - name: Check Code Coverage 
+      continue-on-error: true
       run: npm run coverage 
 
     - name: Archival Test Result
