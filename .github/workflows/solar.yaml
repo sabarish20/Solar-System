@@ -82,3 +82,14 @@ jobs:
         name: Code-Coverage-Result
         path: coverage
         retention-days: 1
+
+  docker:
+    needs: [unit-testing, code-coverage]
+    name: Docker Build & Push 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
