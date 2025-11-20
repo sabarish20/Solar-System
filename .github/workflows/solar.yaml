@@ -1,0 +1,27 @@
+name: Node Js - Workflow
+
+on: 
+  push:
+  workflow-dispatch:
+    branches: 
+      - main
+      - 'feature/*'
+
+jobs:
+  unit testing:
+    name: Unit Testing for Node JS 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: Install & Setup Node JS
+      uses: actions/setup-node@v6
+      with:
+        node-version: 18
+    
+    - name: Install Dependencies
+      run: npm install 
+    
+    - name: Unit Testing 
+      run: npm test 
