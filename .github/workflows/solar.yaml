@@ -1,8 +1,8 @@
 name: Node Js - Workflow
 
 on: 
+  workflow_dispatch:
   push:
-  workflow-dispatch:
     branches: 
       - main
       - 'feature/*'
