@@ -34,9 +34,11 @@ jobs:
       run: npm install 
     
     - name: Unit Testing 
+      id: nodejs-unit-testing
       run: npm test 
     
     - name: Archive Test Result
+      if: steps.nodejs-unit-testing.outcome == 'failure' || steps.nodejs-unit-testing.outcome == 'success'
       uses: actions/upload-artifact@v4
       with: 
         name: TestResult
