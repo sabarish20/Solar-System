@@ -97,6 +97,13 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: GHCR Login
+        uses: docker/login
+        with:
+          repository: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Docker Build
         uses: docker/build-push-action@v6
         with:
@@ -120,4 +127,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKER_USERNAME }}/solar:${{ github.sha }}
+          tags: |
+            ${{ vars.DOCKER_USERNAME }}/solar:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/solar:${{ github.sha }}
