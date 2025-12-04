@@ -1,28 +1,41 @@
-name: Node JS Publish 
+name: Solar System
 
-on: 
-  release:
-    types: [published]
-  
+on:
+  push: 
+    branches:
+      - main
 
-jobs: 
-   publish-npm-packages:
+jobs:
+  unit-testing:
+    name: Unit Testing
+    services:
+      mongo-db:
+        image: siddharth67/mongo-db:non-prod
+        ports: 
+          - 27017:27017
+      env:
+        MONGO_URI: 'mongodb://localhost:27017/superData'
+        MONGO_USERNAME: non-prod-user
+        MONGO_PASSWORD: non-prod-password 
+
     runs-on: ubuntu-latest
-    permissions: 
-      packages: write
-      contents: read
+    
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v5
-        
+    - name: Checkout Repo
+      uses: actions/checkout@v5
 
-      - name: Setup Node JS
-        uses: actions/setup-node@v4 
-        with: 
-          node-version: 20
-          registry-url: 'https://npm.pkg.github.com'
+    - name: Setup Node JS
+      uses: actions/setup-node@v3
+      with: 
 
-      - name: NPM Publish 
-        run: npm publish 
-        env: 
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Unit Testing
+      run: npm test
+      
+    - name: Archive Test Result
+      uses: actions/upload-artifact@v3
+      with:
+        name: Mocha-Test-Result
+        path: test-results.xml
